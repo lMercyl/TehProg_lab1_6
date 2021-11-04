@@ -2,7 +2,6 @@
 #define UNTITLED_CAR_H
 
 #include "Factory.h"
-#include <string>
 
 class Car : public Factory {
 private:
@@ -20,6 +19,11 @@ public:
     std::string getMark();
     std::string getModel();
     std::string getNumber();
+    void setInfoObject();
+    void setInfoObject(std::string mark, std::string model, std::string number);
+    void editInfoObject(int id, std::string value);
+    void showInfoObject();
+    void saveInfoObject();
 };
 
 #endif //UNTITLED_CAR_H
