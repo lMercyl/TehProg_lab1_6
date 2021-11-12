@@ -12,7 +12,8 @@ Furniture::Furniture() {
     std::cout << std::endl;
 }
 
-Furniture::Furniture(std::string type, std::string color, std::string material, std::string price, std::string width, std::string height, std::string depth) {
+Furniture::Furniture(std::string type, std::string color, std::string material, std::string price,
+                     std::string width, std::string height, std::string depth) {
     _type = type;
     _color = color;
     _material = material;
@@ -252,7 +253,10 @@ void Furniture::saveInfoObject() {
             throw "Error open file";
         }
         else {
-            fileOut << 3 << std::endl << _type << std::endl << _color << std::endl << _material << std::endl << _price << std::endl << _width << std::endl << _height << std::endl << _depth << std::endl;
+            fileOut << "FURNITURE" << std::endl << "type: " << _type << std::endl << "color: "  << _color << std::endl
+                    << "material: " << _material << std::endl << "price: "  << _price << std::endl
+                    << "width: " << _width << std::endl << "height: " << _height << std::endl
+                    << "depth: " << _depth << std::endl;
             fileOut.close();
         }
     }

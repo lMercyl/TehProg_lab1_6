@@ -185,7 +185,9 @@ void Worker::saveInfoObject() {
             throw "Error open file";
         }
         else {
-            fileOut << 2 << std::endl << _fullName << std::endl << _position << std::endl << _income << std::endl << _address << std::endl << _phone << std::endl;
+            fileOut << "WORKER" << std::endl << "full name: " << _fullName << std::endl
+            << "position: " <<  _position << std::endl << "income: "  << _income << std::endl
+            << "address: "  << _address << std::endl << "phone:"  << _phone << std::endl;
             fileOut.close();
         }
     }

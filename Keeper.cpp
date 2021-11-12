@@ -3,9 +3,9 @@
 Keeper::Keeper() {
     head = nullptr;
     _size = 0;
-    _sizeObjectFurniture = 0;
-    _sizeObjectCar = 0;
-    _sizeObjectWorker = 0;
+    _sizeObjectFurniture = 7;
+    _sizeObjectCar = 3;
+    _sizeObjectWorker = 5;
     std::cout << "Run constructor Keeper" << std::endl;
     std::cout << std::endl;
 }
@@ -13,9 +13,9 @@ Keeper::Keeper() {
 Keeper::Keeper(int size) {
     head = nullptr;
     _size = size;
-    _sizeObjectFurniture = 0;
-    _sizeObjectCar = 0;
-    _sizeObjectWorker = 0;
+    _sizeObjectFurniture = 7;
+    _sizeObjectCar = 3;
+    _sizeObjectWorker = 5;
     std::cout << "Run constructor Keeper(props)" << std::endl;
     std::cout << std::endl;
 }
@@ -111,71 +111,279 @@ void Keeper::loadObject() {
         _size = 0;
     }
     std::ifstream fileIn;
-    int typeData;
-    int sizeFile;
+    std::string typeData;
+    std::string item;
+    std::string sizeFile;
+    bool work = false;
+    int counterObject = 0;
     Factory *factory;
     fileIn.open("factory.txt");
     try {
         if (!fileIn.is_open()) {
             std::cout << std::endl;
             throw "Error open file";
-        }
-        else {
-            fileIn >> sizeFile;
-            for (int i = 0; i < sizeFile; i++) {
-                fileIn >> typeData;
-                fileIn.ignore(32767, '\n');
-                if (typeData == 1) {
-                    std::string mark;
-                    std::string model;
-                    std::string number;
-                    getline(fileIn, mark);
-                    getline(fileIn, model);
-                    getline(fileIn, number);
-                    Car* car;
-                    car = new Car(mark, model, number);
-                    factory = car;
-                    pushObject(factory);
+        } else {
+            if (fileIn.peek() == EOF) {
+                std::cout << "File is empty" << std::endl;
+            } else {
+                while (!fileIn.eof()) {
+                    if (item[0] == 's' && item[1] == 'i' && item[2] == 'z' && item[3] == 'e' && item[4] == ':') {
+                        sizeFile = item.substr(5);
+                        if (!factory->charInNumbers(sizeFile)) {
+                            std::cout << "Your size set char. Remove Size:int" << std::endl;
+                        }
+                    }
+                    if (item == "CAR" || item == "WORKER" || item == "FURNITURE") {
+                        typeData = item;
+                        if (typeData == "CAR") {
+                            std::string mark = "mark not found";
+                            std::string model = "model not found";
+                            std::string number = "number not found";
+                            do {
+                                std::getline(fileIn, item);
+                                if (item[0] == 'm' && item[1] == 'a' && item[2] == 'r' && item[3] == 'k' &&
+                                    item[4] == ':') {
+                                    item = item.substr(5);
+                                    if (!factory->numbersInStr(item)) {
+                                        if (item == "") {
+                                            mark = "mark is empty";
+                                        } else {
+                                            mark = item;
+                                        }
+                                    } else {
+                                        std::cout << "You input string-line when is number. Value is default"
+                                                  << std::endl;
+                                    }
+                                }
+                                if (item[0] == 'm' && item[1] == 'o' && item[2] == 'd' && item[3] == 'e'
+                                    && item[4] == 'l' && item[5] == ':') {
+                                    item = item.substr(6);
+                                    if (item == "") {
+                                        model = "model is empty";
+                                    } else {
+                                        model = item;
+                                    }
+                                }
+                                if (item[0] == 'n' && item[1] == 'u' && item[2] == 'm' && item[3] == 'b'
+                                    && item[4] == 'e' && item[5] == 'r' && item[6] == ':') {
+                                    item = item.substr(7);
+                                    if (factory->charInNumbers(item)) {
+                                        if (item == "") {
+                                            number = "number is empty";
+                                        } else {
+                                            number = item;
+                                        }
+                                    } else {
+                                        std::cout << "You input string-line when is number. Value is default"
+                                                  << std::endl;
+                                    }
+                                }
+                                if (item == "CAR" || item == "WORKER" || item == "FURNITURE" || fileIn.eof()) {
+                                    Car* car;
+                                    car = new Car(mark, model, number);
+                                    factory = car;
+                                    pushObject(factory);
+                                    counterObject++;
+                                    break;
+                                }
+                            } while (true);
+                        }
+                        if (typeData == "WORKER") {
+                            std::string fullName = "full name not found";
+                            std::string position = "position not found";
+                            std::string income = "income not found";
+                            std::string address = "address not found";
+                            std::string phone = "phone not found";
+                            do {
+                                std::getline(fileIn, item);
+                                if (item[0] == 'f' && item[1] == 'u' && item[2] == 'l' && item[3] == 'l' && item[4] == 'N'
+                                    && item[5] == 'a' && item[6] == 'm' && item[7] == 'e' && item[8] == ':') {
+                                    item = item.substr(9);
+                                    if (!factory->numbersInStr(item)) {
+                                        if (item == "") {
+                                            fullName = "full name is empty";
+                                        } else {
+                                            fullName = item;
+                                        }
+                                    } else {
+                                        std::cout << "You input string-line when is number. Value is default" << std::endl;
+                                    }
+                                }
+                                if (item[0] == 'p' && item[1] == 'o' && item[2] == 's' && item[3] == 'i'
+                                    && item[4] == 't' && item[5] == 'i' && item[6] == 'o' && item[7] == 'n' && item[8] == ':') {
+                                    item = item.substr(9);
+                                    if (!factory->numbersInStr(item)) {
+                                        if (item == "") {
+                                            position = "position is empty";
+                                        } else {
+                                            position = item;
+                                        }
+                                    } else {
+                                        std::cout << "You input string-line when is number. Value is default" << std::endl;
+                                    }
+                                }
+                                if (item[0] == 'i' && item[1] == 'n' && item[2] == 'c' && item[3] == 'o'
+                                    && item[4] == 'm' && item[5] == 'e' && item[6] == ':') {
+                                    item = item.substr(7);
+                                    if (factory->charInNumbers(item)) {
+                                        if (item == "") {
+                                            income = "income is empty";
+                                        } else {
+                                            income = item;
+                                        }
+                                    } else {
+                                        std::cout << "You input string-line when is number. Value is default" << std::endl;
+                                    }
+                                }
+                                if (item[0] == 'a' && item[1] == 'd' && item[2] == 'd' && item[3] == 'r'
+                                    && item[4] == 'e' && item[5] == 's' && item[6] == 's' && item[7] == ':') {
+                                    item = item.substr(8);
+                                    if (item == "") {
+                                        address = "address is empty";
+                                    } else {
+                                        address = item;
+                                    }
+                                }
+                                if (item[0] == 'p' && item[1] == 'h' && item[2] == 'o' && item[3] == 'n'
+                                    && item[4] == 'e' && item[5] == ':') {
+                                    item = item.substr(6);
+                                    if (factory->charInNumbers(item)) {
+                                        if (item == "") {
+                                            phone = "phone is empty";
+                                        } else {
+                                            phone = item;
+                                        }
+                                    } else {
+                                        std::cout << "You input string-line when is number. Value is default" << std::endl;
+                                    }
+                                }
+                                if (item == "CAR" || item == "WORKER" || item == "FURNITURE" || fileIn.eof()) {
+                                    Worker* worker;
+                                    worker = new Worker(fullName, position, income, address, phone);
+                                    factory = worker;
+                                    pushObject(factory);
+                                    counterObject++;
+                                    break;
+                                }
+                            } while (true);
+                        }
+                        if (typeData == "FURNITURE") {
+                            std::string type = "type not found";
+                            std::string color = "color not found";
+                            std::string material = "material not found";
+                            std::string price = "price not found";
+                            std::string width = "width not found";
+                            std::string height = "height not found";
+                            std::string depth = "depth not found";
+                            do {
+                                std::getline(fileIn, item);
+                                if (item[0] == 't' && item[1] == 'y' && item[2] == 'p' && item[3] == 'e' && item[4] == ':') {
+                                    item = item.substr(5);
+                                    if (!factory->numbersInStr(item)) {
+                                        if (item == "") {
+                                            type = "type name is empty";
+                                        } else {
+                                            type = item;
+                                        }
+                                    } else {
+                                        std::cout << "You input string-line when is number. Value is default" << std::endl;
+                                    }
+                                }
+                                if (item[0] == 'c' && item[1] == 'o' && item[2] == 'l' && item[3] == 'o'
+                                    && item[4] == 'r' && item[5] == ':') {
+                                    item = item.substr(6);
+                                    if (!factory->numbersInStr(item)) {
+                                        if (item == "") {
+                                            color = "color is empty";
+                                        } else {
+                                            color = item;
+                                        }
+                                    } else {
+                                        std::cout << "You input string-line when is number. Value is default" << std::endl;
+                                    }
+                                }
+                                if (item[0] == 'm' && item[1] == 'a' && item[2] == 't' && item[3] == 'e'
+                                    && item[4] == 'r' && item[5] == 'i' && item[6] == 'a' && item[7] == 'l' && item[8] == ':') {
+                                    item = item.substr(9);
+                                    if (item == "") {
+                                        material = "material is empty";
+                                    } else {
+                                        material = item;
+                                    }
+                                }
+                                if (item[0] == 'p' && item[1] == 'r' && item[2] == 'i' && item[3] == 'c'
+                                    && item[4] == 'e' && item[5] == ':') {
+                                    item = item.substr(6);
+                                    if (factory->charInNumbers(item)) {
+                                        if (item == "") {
+                                            price = "price is empty";
+                                        } else {
+                                            price = item;
+                                        }
+                                    } else {
+                                        std::cout << "You input string-line when is number. Value is default" << std::endl;
+                                    }
+                                }
+                                if (item[0] == 'w' && item[1] == 'i' && item[2] == 'd' && item[3] == 't'
+                                    && item[4] == 'h' && item[5] == ':') {
+                                    item = item.substr(6);
+                                    if (factory->charInNumbers(item)) {
+                                        if (item == "") {
+                                            width = "width is empty";
+                                        } else {
+                                            width = item;
+                                        }
+                                    } else {
+                                        std::cout << "You input string-line when is number. Value is default" << std::endl;
+                                    }
+                                }
+                                if (item[0] == 'h' && item[1] == 'e' && item[2] == 'i' && item[3] == 'g'
+                                    && item[4] == 'h' && item[5] == 't' && item[6] == ':') {
+                                    item = item.substr(7);
+                                    if (factory->charInNumbers(item)) {
+                                        if (item == "") {
+                                            height = "height is empty";
+                                        } else {
+                                            height = item;
+                                        }
+                                    } else {
+                                        std::cout << "You input string-line when is number. Value is default" << std::endl;
+                                    }
+                                }
+                                if (item[0] == 'd' && item[1] == 'e' && item[2] == 'p' && item[3] == 't'
+                                    && item[4] == 'h' && item[5] == ':') {
+                                    item = item.substr(6);
+                                    if (factory->charInNumbers(item)) {
+                                        if (item == "") {
+                                            depth = "depth is empty";
+                                        } else {
+                                            depth = item;
+                                        }
+                                    } else {
+                                        std::cout << "You input string-line when is number. Value is default" << std::endl;
+                                    }
+                                }
+                                if (item == "CAR" || item == "WORKER" || item == "FURNITURE" || fileIn.eof()) {
+                                    Furniture* furniture;
+                                    furniture = new Furniture(type, color, material, price, width, height, depth);
+                                    factory = furniture;
+                                    pushObject(factory);
+                                    counterObject++;
+                                    break;
+                                }
+                            } while (true);
+                        }
+                    }
+                    if (item == "CAR" || item == "WORKER" || item == "FURNITURE" || fileIn.eof()) {
+                        work = true;
+                        if (fileIn.eof()) {
+                            break;
+                        }
+                    } else {
+                        std::getline(fileIn, item);
+                    }
                 }
-                if (typeData == 2) {
-                    std::string fullName;
-                    std::string position;
-                    std::string income;
-                    std::string address;
-                    std::string phone;
-                    getline(fileIn, fullName);
-                    getline(fileIn, position);
-                    getline(fileIn, income);
-                    getline(fileIn, address);
-                    getline(fileIn, phone);
-                    Worker* work;
-                    work = new Worker(fullName, position, income, address, phone);
-                    factory = work;
-                    pushObject(factory);
-                }
-                if (typeData == 3) {
-                    std::string type;
-                    std::string color;
-                    std::string material;
-                    std::string price;
-                    std::string width;
-                    std::string height;
-                    std::string depth;
-                    getline(fileIn, type);
-                    getline(fileIn, color);
-                    getline(fileIn, material);
-                    getline(fileIn, price);
-                    getline(fileIn, width);
-                    getline(fileIn, height);
-                    getline(fileIn, depth);
-                    Furniture* furniture;
-                    furniture = new Furniture(type, color, material, price, width, height, depth);
-                    factory = furniture;
-                    pushObject(factory);
-                }
-
             }
-
         }
     }
     catch (const char* exception) {
