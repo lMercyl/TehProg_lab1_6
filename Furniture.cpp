@@ -4,7 +4,7 @@ Furniture::Furniture() {
     _type = "type not found";
     _color = "color not found";
     _material = "material not found";
-    _price = "price not found";
+    _price = "0";
     _width = "width not found";
     _height = "height not found";
     _depth = "depth not found";
@@ -173,7 +173,10 @@ void Furniture::editInfoObject(int id) {
             }
             break;
         default:
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             std::cout << "Error, not found value" << std::endl;
+            std::cout << std::endl;
             break;
     }
 }
@@ -251,17 +254,27 @@ void Furniture::saveInfoObject() {
         if (!fileOut.is_open()) {
             std::cout << std::endl;
             throw "Error open file";
+            std::cout << std::endl;
         }
         else {
-            fileOut << "FURNITURE" << std::endl << "type: " << _type << std::endl << "color: "  << _color << std::endl
-                    << "material: " << _material << std::endl << "price: "  << _price << std::endl
-                    << "width: " << _width << std::endl << "height: " << _height << std::endl
-                    << "depth: " << _depth << std::endl;
+            fileOut << "FURNITURE" << std::endl << "type:" << _type << std::endl << "color:"  << _color << std::endl
+                    << "material:" << _material << std::endl << "price:"  << _price << std::endl
+                    << "width:" << _width << std::endl << "height:" << _height << std::endl
+                    << "depth:" << _depth << std::endl;
             fileOut.close();
         }
     }
     catch (const char* exception) {
         std::cout << std::endl;
         std::cerr << "Error: " << exception << '\n';
+        std::cout << std::endl;
     }
+}
+
+int Furniture::getPriceObject() {
+    return atoi(_price.c_str());
+}
+
+int Furniture::getIncomeObject() {
+    return 0;
 }

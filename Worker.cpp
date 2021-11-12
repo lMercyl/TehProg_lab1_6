@@ -3,7 +3,7 @@
 Worker::Worker() {
     _fullName = "Full name not found";
     _position = "Position not found";
-    _income = "income not found";
+    _income = "0";
     _address = "Address not found";
     _phone = "Phone not found";
     std::cout << "Run constructor Worker" << std::endl;
@@ -125,7 +125,10 @@ void Worker::editInfoObject(int id) {
             }
             break;
         default:
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             std::cout << "Error, not found value" << std::endl;
+            std::cout << std::endl;
             break;
     }
 }
@@ -183,16 +186,26 @@ void Worker::saveInfoObject() {
         if (!fileOut.is_open()) {
             std::cout << std::endl;
             throw "Error open file";
+            std::cout << std::endl;
         }
         else {
-            fileOut << "WORKER" << std::endl << "full name: " << _fullName << std::endl
-            << "position: " <<  _position << std::endl << "income: "  << _income << std::endl
-            << "address: "  << _address << std::endl << "phone:"  << _phone << std::endl;
+            fileOut << "WORKER" << std::endl << "fullName:" << _fullName << std::endl
+            << "position:" <<  _position << std::endl << "income:"  << _income << std::endl
+            << "address:"  << _address << std::endl << "phone:"  << _phone << std::endl;
             fileOut.close();
         }
     }
     catch (const char* exception) {
         std::cout << std::endl;
         std::cerr << "Error: " << exception << '\n';
+        std::cout << std::endl;
     }
+}
+
+int Worker::getIncomeObject() {
+    return atoi(_income.c_str());
+}
+
+int Worker::getPriceObject() {
+    return 0;
 }

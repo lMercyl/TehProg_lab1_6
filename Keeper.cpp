@@ -3,9 +3,6 @@
 Keeper::Keeper() {
     head = nullptr;
     _size = 0;
-    _sizeObjectFurniture = 7;
-    _sizeObjectCar = 3;
-    _sizeObjectWorker = 5;
     std::cout << "Run constructor Keeper" << std::endl;
     std::cout << std::endl;
 }
@@ -13,9 +10,6 @@ Keeper::Keeper() {
 Keeper::Keeper(int size) {
     head = nullptr;
     _size = size;
-    _sizeObjectFurniture = 7;
-    _sizeObjectCar = 3;
-    _sizeObjectWorker = 5;
     std::cout << "Run constructor Keeper(props)" << std::endl;
     std::cout << std::endl;
 }
@@ -38,18 +32,6 @@ Keeper::~Keeper() {
 
 int Keeper::getSize() {
     return _size;
-}
-
-int Keeper::getSizeObjectFurniture() {
-    return _sizeObjectFurniture;
-}
-
-int Keeper::getSizeObjectCar() {
-    return _sizeObjectCar;
-}
-
-int Keeper::getSizeObjectWorker() {
-    return _sizeObjectWorker;
 }
 
 void Keeper::pushObject(Factory *obj) {
@@ -81,10 +63,6 @@ void Keeper::saveObject() {
             std::cout << std::endl;
             throw "Error open file";
         }
-        else {
-            fileOut << "Size: " << _size << std::endl;
-            fileOut.close();
-        }
         Item* buf = head;
         for (int i = 0; i < _size; i++) {
             buf->data->saveInfoObject();
@@ -111,10 +89,9 @@ void Keeper::loadObject() {
         _size = 0;
     }
     std::ifstream fileIn;
-    std::string typeData;
     std::string item;
-    std::string sizeFile;
     bool work = false;
+    bool found = false;
     int counterObject = 0;
     Factory *factory;
     fileIn.open("factory.txt");
@@ -127,15 +104,14 @@ void Keeper::loadObject() {
                 std::cout << "File is empty" << std::endl;
             } else {
                 while (!fileIn.eof()) {
-                    if (item[0] == 's' && item[1] == 'i' && item[2] == 'z' && item[3] == 'e' && item[4] == ':') {
-                        sizeFile = item.substr(5);
-                        if (!factory->charInNumbers(sizeFile)) {
-                            std::cout << "Your size set char. Remove Size:int" << std::endl;
-                        }
+                    if (item == "CAR" || item == "WORKER" || item == "FURNITURE") {
+                        work = true;
+                    } else {
+                        std::getline(fileIn, item);
                     }
                     if (item == "CAR" || item == "WORKER" || item == "FURNITURE") {
-                        typeData = item;
-                        if (typeData == "CAR") {
+                        found = true;
+                        if (item == "CAR") {
                             std::string mark = "mark not found";
                             std::string model = "model not found";
                             std::string number = "number not found";
@@ -174,7 +150,7 @@ void Keeper::loadObject() {
                                             number = item;
                                         }
                                     } else {
-                                        std::cout << "You input string-line when is number. Value is default"
+                                        std::cout << "You input string-line when is char. Value is default"
                                                   << std::endl;
                                     }
                                 }
@@ -188,10 +164,10 @@ void Keeper::loadObject() {
                                 }
                             } while (true);
                         }
-                        if (typeData == "WORKER") {
+                        if (item == "WORKER") {
                             std::string fullName = "full name not found";
                             std::string position = "position not found";
-                            std::string income = "income not found";
+                            std::string income = "0";
                             std::string address = "address not found";
                             std::string phone = "phone not found";
                             do {
@@ -232,7 +208,7 @@ void Keeper::loadObject() {
                                             income = item;
                                         }
                                     } else {
-                                        std::cout << "You input string-line when is number. Value is default" << std::endl;
+                                        std::cout << "You input string-line when is char. Value is default" << std::endl;
                                     }
                                 }
                                 if (item[0] == 'a' && item[1] == 'd' && item[2] == 'd' && item[3] == 'r'
@@ -254,7 +230,7 @@ void Keeper::loadObject() {
                                             phone = item;
                                         }
                                     } else {
-                                        std::cout << "You input string-line when is number. Value is default" << std::endl;
+                                        std::cout << "You input string-line when is char. Value is default" << std::endl;
                                     }
                                 }
                                 if (item == "CAR" || item == "WORKER" || item == "FURNITURE" || fileIn.eof()) {
@@ -267,11 +243,11 @@ void Keeper::loadObject() {
                                 }
                             } while (true);
                         }
-                        if (typeData == "FURNITURE") {
+                        if (item == "FURNITURE") {
                             std::string type = "type not found";
                             std::string color = "color not found";
                             std::string material = "material not found";
-                            std::string price = "price not found";
+                            std::string price = "0";
                             std::string width = "width not found";
                             std::string height = "height not found";
                             std::string depth = "depth not found";
@@ -321,7 +297,7 @@ void Keeper::loadObject() {
                                             price = item;
                                         }
                                     } else {
-                                        std::cout << "You input string-line when is number. Value is default" << std::endl;
+                                        std::cout << "You input string-line when is char. Value is default" << std::endl;
                                     }
                                 }
                                 if (item[0] == 'w' && item[1] == 'i' && item[2] == 'd' && item[3] == 't'
@@ -334,7 +310,7 @@ void Keeper::loadObject() {
                                             width = item;
                                         }
                                     } else {
-                                        std::cout << "You input string-line when is number. Value is default" << std::endl;
+                                        std::cout << "You input string-line when is char. Value is default" << std::endl;
                                     }
                                 }
                                 if (item[0] == 'h' && item[1] == 'e' && item[2] == 'i' && item[3] == 'g'
@@ -347,7 +323,7 @@ void Keeper::loadObject() {
                                             height = item;
                                         }
                                     } else {
-                                        std::cout << "You input string-line when is number. Value is default" << std::endl;
+                                        std::cout << "You input string-line when is char. Value is default" << std::endl;
                                     }
                                 }
                                 if (item[0] == 'd' && item[1] == 'e' && item[2] == 'p' && item[3] == 't'
@@ -360,7 +336,7 @@ void Keeper::loadObject() {
                                             depth = item;
                                         }
                                     } else {
-                                        std::cout << "You input string-line when is number. Value is default" << std::endl;
+                                        std::cout << "You input string-line when is char. Value is default" << std::endl;
                                     }
                                 }
                                 if (item == "CAR" || item == "WORKER" || item == "FURNITURE" || fileIn.eof()) {
@@ -374,17 +350,19 @@ void Keeper::loadObject() {
                             } while (true);
                         }
                     }
-                    if (item == "CAR" || item == "WORKER" || item == "FURNITURE" || fileIn.eof()) {
-                        work = true;
-                        if (fileIn.eof()) {
-                            break;
-                        }
-                    } else {
-                        std::getline(fileIn, item);
-                    }
                 }
             }
         }
+        if (fileIn.eof() && (item == "CAR" || item == "WORKER" || item == "FURNITURE")) {
+            std::cout << "It is impossible to create an object at the end of the file without defining parameters." << std::endl;
+            std::cout << "Fill in the file normally" << std::endl;
+            std::cout << std::endl;
+        }
+        if (!found) {
+            std::cout << "Impossible to define" << std::endl;
+            std::cout << std::endl;
+        }
+        fileIn.close();
     }
     catch (const char* exception) {
         std::cout << std::endl;

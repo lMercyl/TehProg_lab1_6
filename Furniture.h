@@ -16,7 +16,8 @@ public:
     Furniture();
     Furniture(std::string type, std::string color, std::string material, std::string price, std::string width, std::string height, std::string depth);
     Furniture(Furniture& obj);
-    ~Furniture();
+    ~Furniture() override;
+
     void setType(std::string type);
     void setColor(std::string color);
     void setMaterial(std::string material);
@@ -24,6 +25,7 @@ public:
     void setWidth(std::string width);
     void setHeight(std::string height);
     void setDepth(std::string depth);
+
     std::string getType();
     std::string getColor();
     std::string getMaterial();
@@ -31,10 +33,13 @@ public:
     std::string getWidth();
     std::string getHeight();
     std::string getDepth();
-    virtual void setInfoObject();
-    virtual void editInfoObject(int id);
-    virtual void showInfoObject();
-    virtual void saveInfoObject();
+
+    void setInfoObject() override;
+    void editInfoObject(int id) override;
+    void showInfoObject() override;
+    void saveInfoObject() override;
+    int getPriceObject() override;
+    int getIncomeObject() override;
 };
 
 #endif //UNTITLED_FURNITURE_H

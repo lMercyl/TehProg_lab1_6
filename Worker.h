@@ -14,21 +14,26 @@ public:
     Worker();
     Worker(std::string fullName, std::string position, std::string income, std::string address, std::string phone);
     Worker(Worker& obj);
-    ~Worker();
+    ~Worker() override;
+
     void setFullName(std::string fullName);
     void setPosition(std::string position);
     void setIncome(std::string income);
     void setAddress(std::string address);
     void setPhone(std::string phone);
+
     std::string getFullName();
     std::string getPosition();
     std::string getIncome();
     std::string getAddress();
     std::string getPhone();
-    virtual void setInfoObject();
-    virtual void editInfoObject(int id);
-    virtual void showInfoObject();
-    virtual void saveInfoObject();
+
+    void setInfoObject() override;
+    void editInfoObject(int id) override;
+    void showInfoObject() override;
+    void saveInfoObject() override;
+    int getIncomeObject() override;
+    int getPriceObject() override;
 };
 
 #endif //UNTITLED_WORKER_H

@@ -4,7 +4,6 @@
 #include <fstream>
 #include <string>
 #include <iostream>
-#include <regex>
 
 class Factory {
 public:
@@ -16,6 +15,8 @@ public:
     virtual void editInfoObject(int id) = 0;
     virtual void showInfoObject() = 0;
     virtual void saveInfoObject() = 0;
+    virtual int getPriceObject() = 0;
+    virtual int getIncomeObject() = 0;
 };
 
 #endif //UNTITLED_FACTORY_H

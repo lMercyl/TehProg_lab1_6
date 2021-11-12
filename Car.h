@@ -12,17 +12,22 @@ public:
     Car();
     Car(std::string mark, std::string model, std::string number);
     Car(Car& obj);
-    ~Car();
+    ~Car() override;
+
     void setMark(std::string mark);
     void setModel(std::string model);
     void setNumber(std::string number);
+
     std::string getMark();
     std::string getModel();
     std::string getNumber();
-    virtual void setInfoObject();
-    virtual void editInfoObject(int id);
-    virtual void showInfoObject();
-    virtual void saveInfoObject();
+
+    void setInfoObject() override;
+    void editInfoObject(int id) override;
+    void showInfoObject() override;
+    void saveInfoObject() override;
+    int getPriceObject() override;
+    int getIncomeObject() override;
 };
 
 #endif //UNTITLED_CAR_H
