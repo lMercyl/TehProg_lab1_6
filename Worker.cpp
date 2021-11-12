@@ -1,12 +1,13 @@
 #include "Worker.h"
 
 Worker::Worker() {
-    _fullName = "";
-    _position = "";
-    _income = "";
-    _address = "";
-    _phone = "";
+    _fullName = "Full name not found";
+    _position = "Position not found";
+    _income = "income not found";
+    _address = "Address not found";
+    _phone = "Phone not found";
     std::cout << "Run constructor Worker" << std::endl;
+    std::cout << std::endl;
 }
 
 Worker::Worker(std::string fullName, std::string position, std::string income, std::string address, std::string phone) {
@@ -16,6 +17,7 @@ Worker::Worker(std::string fullName, std::string position, std::string income, s
     _address = address;
     _phone = phone;
     std::cout << "Run constructor Worker(props)" << std::endl;
+    std::cout << std::endl;
 }
 
 Worker::Worker(Worker &obj) {
@@ -25,15 +27,17 @@ Worker::Worker(Worker &obj) {
     _address = obj._address;
     _phone = obj._phone;
     std::cout << "Run constructor-copy Worker" << std::endl;
+    std::cout << std::endl;
 }
 
 Worker::~Worker() {
     _fullName = "";
     _position = "";
-    _income = "";
+    _income = " ";
     _address = "";
     _phone = "";
     std::cout << "Run destructor Worker" << std::endl;
+    std::cout << std::endl;
 }
 
 void Worker::setFullName(std::string fullName) {
@@ -76,22 +80,49 @@ std::string Worker::getPhone() {
     return _phone;
 }
 
-void Worker::editInfoObject(int id, std::string value) {
+void Worker::editInfoObject(int id) {
+    std::string str;
+    std::cin.ignore(32767, '\n');
     switch (id) {
         case 1:
-            _fullName = value;
+            std::cout << "Input new full name worker: ";
+            std::getline(std::cin, str);
+            if (!numbersInStr(str)) {
+                _fullName = str;
+            } else {
+                std::cout << "You input string-line when is number. Value not set" << std::endl;
+            }
             break;
         case 2:
-            _position = value;
+            std::cout << "Input new position worker: ";
+            std::getline(std::cin, str);
+            if (!numbersInStr(str)) {
+                _position = str;
+            } else {
+                std::cout << "You input string-line when is number. Value not set" << std::endl;
+            }
             break;
         case 3:
-            _income = value;
+            std::cout << "Input new income worker: ";
+            std::getline(std::cin, str);
+            if (charInNumbers(str)) {
+                _income = str;
+            } else {
+                std::cout << "You input string-line when is char. Value not set" << std::endl;
+            }
             break;
         case 4:
-            _address = value;
+            std::getline(std::cin, str);
+            _address = str;
             break;
         case 5:
-            _phone = value;
+            std::cout << "Input new phone worker: ";
+            std::getline(std::cin, str);
+            if (charInNumbers(str)) {
+                _phone = str;
+            } else {
+                std::cout << "You input string-line when is char. Value not set" << std::endl;
+            }
             break;
         default:
             std::cout << "Error, not found value" << std::endl;
@@ -100,48 +131,66 @@ void Worker::editInfoObject(int id, std::string value) {
 }
 
 void Worker::setInfoObject() {
-    std::cout << "Input full name worker: " << std::endl;
-    getline(std::cin, _fullName);
-    std::cout << "Input position worker: " << std::endl;
-    getline(std::cin, _position);
-    std::cout << "Input income worker: " << std::endl;
-    std::getline(std::cin, _income);
-    std::cout << "Input address worker: " << std::endl;
-    std::getline(std::cin, _address);
-    std::cout << "Input phone worker: " << std::endl;
-    std::getline(std::cin, _phone);
-}
-
-void Worker::setInfoObject(std::string fullName, std::string position, std::string income, std::string address, std::string phone) {
-    _fullName = fullName;
-    _position = position;
-    _income = income;
-    _address = address;
-    _phone = phone;
+    std::string str;
+    std::cin.ignore(32767, '\n');
+    std::cout << "Input full name worker: ";
+    std::getline(std::cin, str);
+    if (!numbersInStr(str)) {
+        _fullName = str;
+    } else {
+        std::cout << "You input string-line when is number. Value is default" << std::endl;
+    }
+    std::cout << "Input position worker: ";
+    std::getline(std::cin, str);
+    if (!numbersInStr(str)) {
+        _position = str;
+    } else {
+        std::cout << "You input string-line when is number. Value is default" << std::endl;
+    }
+    std::cout << "Input income worker: ";
+    std::getline(std::cin, str);
+    if (charInNumbers(str)) {
+        _income = str;
+    } else {
+        std::cout << "You input string-line when is char. Value is default" << std::endl;
+    }
+    std::cout << "Input address worker: ";
+    std::getline(std::cin, str);
+    _address = str;
+    std::cout << "Input phone worker: ";
+    std::getline(std::cin, str);
+    if (charInNumbers(str)) {
+        _phone = str;
+    } else {
+        std::cout << "You input string-line when is char. Value is default" << std::endl;
+    }
+    std::cout << std::endl;
 }
 
 void Worker::showInfoObject() {
-    std::cout << "Worker name: " << _fullName << std::endl;
-    std::cout << "Worker position: " << _position << std::endl;
-    std::cout << "Worker income: " << _income << std::endl;
-    std::cout << "Worker address: " << _address << std::endl;
-    std::cout << "Worker phone: " << _phone << std::endl;
+    std::cout << "1. Worker name: " << _fullName << std::endl;
+    std::cout << "2. Worker position: " << _position << std::endl;
+    std::cout << "3. Worker income: " << _income << std::endl;
+    std::cout << "4. Worker address: " << _address << std::endl;
+    std::cout << "5. Worker phone: " << _phone << std::endl;
     std::cout << std::endl;
 }
 
 void Worker::saveInfoObject() {
     std::ofstream fileOut;
-    fileOut.open("worker.txt", std::ios_base::app);
+    fileOut.open("factory.txt", std::ios_base::app);
     try {
         if (!fileOut.is_open()) {
+            std::cout << std::endl;
             throw "Error open file";
         }
         else {
-            fileOut << 1 << std::endl << _fullName << std::endl << _position << std::endl << _income << std::endl << _address << std::endl << _phone << std::endl;
+            fileOut << 2 << std::endl << _fullName << std::endl << _position << std::endl << _income << std::endl << _address << std::endl << _phone << std::endl;
             fileOut.close();
         }
     }
     catch (const char* exception) {
+        std::cout << std::endl;
         std::cerr << "Error: " << exception << '\n';
     }
 }

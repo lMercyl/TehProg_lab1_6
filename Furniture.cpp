@@ -1,17 +1,18 @@
 #include "Furniture.h"
 
 Furniture::Furniture() {
-    _type = "";
-    _color = "";
-    _material = "";
-    _price = 0;
-    _width = 0;
-    _height = 0;
-    _depth = 0;
+    _type = "type not found";
+    _color = "color not found";
+    _material = "material not found";
+    _price = "price not found";
+    _width = "width not found";
+    _height = "height not found";
+    _depth = "depth not found";
     std::cout << "Run constructor Furniture" << std::endl;
+    std::cout << std::endl;
 }
 
-Furniture::Furniture(std::string type, std::string color, std::string material, int price, int width, int height, int depth) {
+Furniture::Furniture(std::string type, std::string color, std::string material, std::string price, std::string width, std::string height, std::string depth) {
     _type = type;
     _color = color;
     _material = material;
@@ -20,6 +21,7 @@ Furniture::Furniture(std::string type, std::string color, std::string material, 
     _height = height;
     _depth = depth;
     std::cout << "Run constructor Furniture(props)" << std::endl;
+    std::cout << std::endl;
 }
 
 Furniture::Furniture(Furniture &obj) {
@@ -31,16 +33,19 @@ Furniture::Furniture(Furniture &obj) {
     _height = obj._height;
     _depth = obj._depth;
     std::cout << "Run constructor-copy Furniture" << std::endl;
+    std::cout << std::endl;
 }
 
 Furniture::~Furniture() {
     _type = "";
     _color = "";
     _material = "";
-    _price = 0;
-    _width = 0;
-    _height = 0;
-    _depth = 0;
+    _price = "";
+    _width = "";
+    _height = "";
+    _depth = "";
+    std::cout << "Run destructor Furniture" << std::endl;
+    std::cout << std::endl;
 }
 
 void Furniture::setType(std::string type) {
@@ -55,19 +60,19 @@ void Furniture::setMaterial(std::string material) {
     _material = material;
 }
 
-void Furniture::setPrice(int price) {
+void Furniture::setPrice(std::string price) {
     _price = price;
 }
 
-void Furniture::setWidth(int width) {
+void Furniture::setWidth(std::string width) {
     _width = width;
 }
 
-void Furniture::setHeight(int height) {
+void Furniture::setHeight(std::string height) {
     _height = height;
 }
 
-void Furniture::setDepth(int depth) {
+void Furniture::setDepth(std::string depth) {
     _depth = depth;
 }
 
@@ -83,44 +88,88 @@ std::string Furniture::getMaterial() {
     return _material;
 }
 
-int Furniture::getPrice() {
+std::string Furniture::getPrice() {
     return _price;
 }
 
-int Furniture::getWidth() {
+std::string Furniture::getWidth() {
     return _width;
 }
 
-int Furniture::getHeight() {
+std::string Furniture::getHeight() {
     return _height;
 }
 
-int Furniture::getDepth() {
+std::string Furniture::getDepth() {
     return _depth;
 }
 
-void Furniture::editInfoObject(int id, std::string value) {
+void Furniture::editInfoObject(int id) {
+    std::string str;
+    std::cin.ignore(32767, '\n');
     switch (id) {
         case 1:
-            _type = value;
+            std::cout << "Input new type furniture: ";
+            std::getline(std::cin, str);
+            if (!numbersInStr(str)) {
+                _type = str;
+            } else {
+                std::cout << "You input string-line when is number. Value not set" << std::endl;
+            }
             break;
         case 2:
-            _color = value;
+            std::cout << "Input new color furniture: ";
+            std::getline(std::cin, str);
+            if (!numbersInStr(str)) {
+                _color = str;
+            } else {
+                std::cout << "You input string-line when is number. Value not set" << std::endl;
+            }
             break;
         case 3:
-            _material = value;
+            std::cout << "Input new material furniture: ";
+            std::getline(std::cin, str);
+            if (!numbersInStr(str)) {
+                _material = str;
+            } else {
+                std::cout << "You input string-line when is number. Value not set" << std::endl;
+            }
             break;
         case 4:
-            _price = atoi(value.c_str());
+            std::cout << "Input new price furniture: ";
+            std::getline(std::cin, str);
+            if (charInNumbers(str)) {
+                _price = str;
+            } else {
+                std::cout << "You input string-line when is char. Value not set" << std::endl;
+            }
             break;
         case 5:
-            _width = atoi(value.c_str());
+            std::cout << "Input new width furniture: ";
+            std::getline(std::cin, str);
+            if (charInNumbers(str)) {
+                _width = str;
+            } else {
+                std::cout << "You input string-line when is char. Value not set" << std::endl;
+            }
             break;
         case 6:
-            _height = atoi(value.c_str());
+            std::cout << "Input new height furniture: ";
+            std::getline(std::cin, str);
+            if (charInNumbers(str)) {
+                _height = str;
+            } else {
+                std::cout << "You input string-line when is char. Value not set" << std::endl;
+            }
             break;
         case 7:
-            _depth = atoi(value.c_str());
+            std::cout << "Input new depth furniture: ";
+            std::getline(std::cin, str);
+            if (charInNumbers(str)) {
+                _depth = str;
+            } else {
+                std::cout << "You input string-line when is char. Value not set" << std::endl;
+            }
             break;
         default:
             std::cout << "Error, not found value" << std::endl;
@@ -130,57 +179,85 @@ void Furniture::editInfoObject(int id, std::string value) {
 
 void Furniture::setInfoObject() {
     std::string str;
-    std::cout << "Input type furniture: " << std::endl;
-    getline(std::cin, _type);
-    std::cout << "Input color furniture: " << std::endl;
-    getline(std::cin, _color);
-    std::cout << "Input material furniture: " << std::endl;
-    getline(std::cin, _material);
-    std::cout << "Input width furniture: " << std::endl;
+    std::cin.ignore(32767, '\n');
+    std::cout << "Input type furniture: ";
     std::getline(std::cin, str);
-    _width = atoi(str.c_str());
-    std::cout << "Input height furniture: " << std::endl;
+    if (!numbersInStr(str)) {
+        _type = str;
+    } else {
+        std::cout << "You input string-line when is number. Value is default" << std::endl;
+    }
+    std::cout << "Input color furniture: ";
     std::getline(std::cin, str);
-    _height = atoi(str.c_str());
-    std::cout << "Input depth furniture: " << std::endl;
+    if (!numbersInStr(str)) {
+        _color = str;
+    } else {
+        std::cout << "You input string-line when is number. Value is default" << std::endl;
+    }
+    std::cout << "Input material furniture: ";
     std::getline(std::cin, str);
-    _depth = atoi(str.c_str());
-}
-
-void Furniture::setInfoObject(std::string type, std::string color, std::string material, int price, int width, int height, int depth) {
-    _type = type;
-    _color = color;
-    _material = material;
-    _price = price;
-    _width = width;
-    _height = height;
-    _depth = depth;
+    if (!numbersInStr(str)) {
+        _material = str;
+    } else {
+        std::cout << "You input string-line when is number. Value is default" << std::endl;
+    }
+    std::cout << "Input price furniture: ";
+    std::getline(std::cin, str);
+    if (charInNumbers(str)) {
+        _price = str;
+    } else {
+        std::cout << "You input string-line when is char. Value is default" << std::endl;
+    }
+    std::cout << "Input width furniture: ";
+    std::getline(std::cin, str);
+    if (charInNumbers(str)) {
+        _width = str;
+    } else {
+        std::cout << "You input string-line when is char. Value is default" << std::endl;
+    }
+    std::cout << "Input height furniture: ";
+    std::getline(std::cin, str);
+    if (charInNumbers(str)) {
+        _height = str;
+    } else {
+        std::cout << "You input string-line when is char. Value is default" << std::endl;
+    }
+    std::cout << "Input depth furniture: ";
+    std::getline(std::cin, str);
+    if (charInNumbers(str)) {
+        _depth = str;
+    } else {
+        std::cout << "You input string-line when is char. Value is default" << std::endl;
+    }
+    std::cout << std::endl;
 }
 
 void Furniture::showInfoObject() {
-    std::cout << "Furniture type: " << _type << std::endl;
-    std::cout << "Furniture color: " << _color << std::endl;
-    std::cout << "Furniture material: " << _material << std::endl;
-    std::cout << "Furniture price: " << _price << std::endl;
-    std::cout << "Furniture width: " << _height << std::endl;
-    std::cout << "Furniture height: " << _height << std::endl;
-    std::cout << "Furniture depth: " << _depth << std::endl;
+    std::cout << "1. Furniture type: " << _type << std::endl;
+    std::cout << "2. Furniture color: " << _color << std::endl;
+    std::cout << "3. Furniture material: " << _material << std::endl;
+    std::cout << "4. Furniture price: " << _price << std::endl;
+    std::cout << "5. Furniture width: " << _height << std::endl;
+    std::cout << "6. Furniture height: " << _height << std::endl;
+    std::cout << "7. Furniture depth: " << _depth << std::endl;
     std::cout << std::endl;
 }
 
 void Furniture::saveInfoObject() {
     std::ofstream fileOut;
-    fileOut.open("furniture.txt", std::ios_base::app);
+    fileOut.open("factory.txt", std::ios_base::app);
     try {
         if (!fileOut.is_open()) {
+            std::cout << std::endl;
             throw "Error open file";
         }
         else {
-            fileOut << 2 << std::endl << _type << std::endl << _color << std::endl << _material << std::endl << _price << std::endl << _width << std::endl << _height << std::endl << _depth << std::endl;
+            fileOut << 3 << std::endl << _type << std::endl << _color << std::endl << _material << std::endl << _price << std::endl << _width << std::endl << _height << std::endl << _depth << std::endl;
             fileOut.close();
         }
     }
     catch (const char* exception) {
+        std::cout << std::endl;
         std::cerr << "Error: " << exception << '\n';
     }
 }

@@ -6,6 +6,8 @@ Keeper::Keeper() {
     _sizeObjectFurniture = 0;
     _sizeObjectCar = 0;
     _sizeObjectWorker = 0;
+    std::cout << "Run constructor Keeper" << std::endl;
+    std::cout << std::endl;
 }
 
 Keeper::Keeper(int size) {
@@ -14,6 +16,8 @@ Keeper::Keeper(int size) {
     _sizeObjectFurniture = 0;
     _sizeObjectCar = 0;
     _sizeObjectWorker = 0;
+    std::cout << "Run constructor Keeper(props)" << std::endl;
+    std::cout << std::endl;
 }
 
 Keeper::~Keeper() {
@@ -28,6 +32,8 @@ Keeper::~Keeper() {
         head->data->~Factory();
         delete(head);
     }
+    std::cout << "Run destructor Keeper" << std::endl;
+    std::cout << std::endl;
 }
 
 int Keeper::getSize() {
@@ -72,10 +78,11 @@ void Keeper::saveObject() {
     fileOut.open("factory.txt", std::ios_base::out);
     try {
         if (!fileOut.is_open()) {
+            std::cout << std::endl;
             throw "Error open file";
         }
         else {
-            fileOut << _size << std::endl;
+            fileOut << "Size: " << _size << std::endl;
             fileOut.close();
         }
         Item* buf = head;
@@ -85,6 +92,7 @@ void Keeper::saveObject() {
         }
     }
     catch (const char* exception) {
+        std::cout << std::endl;
         std::cerr << "Error: " << exception << '\n';
     }
 }
@@ -109,12 +117,14 @@ void Keeper::loadObject() {
     fileIn.open("factory.txt");
     try {
         if (!fileIn.is_open()) {
+            std::cout << std::endl;
             throw "Error open file";
         }
         else {
             fileIn >> sizeFile;
             for (int i = 0; i < sizeFile; i++) {
                 fileIn >> typeData;
+                fileIn.ignore(32767, '\n');
                 if (typeData == 1) {
                     std::string mark;
                     std::string model;
@@ -159,7 +169,7 @@ void Keeper::loadObject() {
                     getline(fileIn, height);
                     getline(fileIn, depth);
                     Furniture* furniture;
-                    furniture = new Furniture(type, color, material, atoi(price.c_str()), atoi(width.c_str()), atoi(height.c_str()), atoi(depth.c_str()));
+                    furniture = new Furniture(type, color, material, price, width, height, depth);
                     factory = furniture;
                     pushObject(factory);
                 }
@@ -169,6 +179,7 @@ void Keeper::loadObject() {
         }
     }
     catch (const char* exception) {
+        std::cout << std::endl;
         std::cerr << "Error: " << exception << '\n';
     }
 }
@@ -207,8 +218,7 @@ void Keeper::popObject(int index) {
     }
 }
 
-Factory* Keeper::operator[] (const int index)
-{
+Factory* Keeper::operator[] (const int index) {
     Item* buf = head;
     if (((index) >= _size) || (index < 0)) {
         std::cout << "Error" << std::endl;
@@ -217,7 +227,7 @@ Factory* Keeper::operator[] (const int index)
         for (int i = 0; i < index; i++) {
             buf = buf->nextItem;
         }
-        return (buf->data);
     }
+    return (buf->data);
 }
 

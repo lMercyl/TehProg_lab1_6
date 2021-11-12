@@ -19,11 +19,10 @@ public:
     std::string getMark();
     std::string getModel();
     std::string getNumber();
-    void setInfoObject();
-    void setInfoObject(std::string mark, std::string model, std::string number);
-    void editInfoObject(int id, std::string value);
-    void showInfoObject();
-    void saveInfoObject();
+    virtual void setInfoObject();
+    virtual void editInfoObject(int id);
+    virtual void showInfoObject();
+    virtual void saveInfoObject();
 };
 
 #endif //UNTITLED_CAR_H

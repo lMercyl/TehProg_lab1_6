@@ -25,11 +25,10 @@ public:
     std::string getIncome();
     std::string getAddress();
     std::string getPhone();
-    void setInfoObject();
-    void setInfoObject(std::string fullName, std::string position, std::string income, std::string address, std::string phone);
-    void editInfoObject(int id, std::string value);
-    void showInfoObject();
-    void saveInfoObject();
+    virtual void setInfoObject();
+    virtual void editInfoObject(int id);
+    virtual void showInfoObject();
+    virtual void saveInfoObject();
 };
 
 #endif //UNTITLED_WORKER_H
