@@ -373,9 +373,7 @@ void Keeper::popObject(int index) {
     }
     if (((index) >= _size) || (index < 0)) {
         std::cout << "Not found index" << std::endl;
-    }
-
-    else {
+    } else {
         if (buf->nextItem == nullptr) {
             std::cout << "Delete last object and one in all"<< std::endl;
             buf->data->~Factory();
