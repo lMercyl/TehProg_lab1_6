@@ -254,7 +254,6 @@ void Furniture::saveInfoObject() {
         if (!fileOut.is_open()) {
             std::cout << std::endl;
             throw "Error open file";
-            std::cout << std::endl;
         }
         else {
             fileOut << "FURNITURE" << std::endl << "type:" << _type << std::endl << "color:"  << _color << std::endl
