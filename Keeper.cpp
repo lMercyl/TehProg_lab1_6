@@ -402,8 +402,7 @@ Factory* Keeper::operator[] (const int index) {
     Item* buf = head;
     if (((index) >= _size) || (index < 0)) {
         std::cout << "Error" << std::endl;
-    }
-    else {
+    } else {
         for (int i = 0; i < index; i++) {
             buf = buf->nextItem;
         }
