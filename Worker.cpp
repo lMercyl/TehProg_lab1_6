@@ -186,7 +186,6 @@ void Worker::saveInfoObject() {
         if (!fileOut.is_open()) {
             std::cout << std::endl;
             throw "Error open file";
-            std::cout << std::endl;
         }
         else {
             fileOut << "WORKER" << std::endl << "fullName:" << _fullName << std::endl
